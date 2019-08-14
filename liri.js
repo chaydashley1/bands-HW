@@ -7,6 +7,9 @@ var keys = require("./keys.js");
 var moment = require("moment");
 var fs = require("fs");
 
+const command = process.argv[2];
+const search = process.argv[3];
+
 var spotify = new Spotify(keys.spotify);
 
 //function to get the artist name
@@ -15,15 +18,11 @@ var getArtistNames = function(artist) {
 };
 
 //function for running spotify search
-var getMeSpotify = function(songName) {
-  if (songName === undefined) {
-    songName = "I Don't Wanna Miss a Thing";
-  }
-
+var getMeSpotify = function() {
   spotify.search(
     {
       type: "track",
-      query: songName
+      query: search
     },
     function(err, data) {
       if (err) {
@@ -45,4 +44,18 @@ var getMeSpotify = function(songName) {
   );
 };
 
-getMeSpotify();
+function getMovie() {}
+
+// getMeSpotify();
+
+switch (command) {
+  case "movie-this":
+    getMovie();
+    break;
+  case "spotify-this":
+    getMeSpotify();
+    break;
+  default:
+    console.log("this is default");
+    break;
+}
